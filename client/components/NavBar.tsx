@@ -10,15 +10,8 @@ interface Props {
     locationRef: RefObject<HTMLElement | null>;
     reviewsRef: RefObject<HTMLElement | null>;
   };
-  setPin: Dispatch<SetStateAction<string>>;
-  verifyPin: () => void;
 }
-export default function NavBar({
-  scrollToSection,
-  refs,
-  setPin,
-  verifyPin,
-}: Props) {
+export default function NavBar({ scrollToSection, refs }: Props) {
   return (
     <motion.nav
       className="fixed top-0 left-0 w-full min-h-15 bg-(--background) shadow flex justify-between items-center p-2 px-25 z-50"
@@ -34,7 +27,6 @@ export default function NavBar({
           className="text-(--primary) cursor-pointer"
           onClick={() => {
             scrollToSection(refs.homeRef);
-            verifyPin();
           }}
         >
           BOOK.ME
@@ -48,7 +40,6 @@ export default function NavBar({
               className={nav_menu}
               onClick={() => {
                 scrollToSection(refs.homeRef);
-                setPin((prev) => prev + 1);
               }}
             >
               Home
@@ -59,7 +50,6 @@ export default function NavBar({
               className={nav_menu}
               onClick={() => {
                 scrollToSection(refs.hoursRef);
-                setPin((prev) => prev + 2);
               }}
             >
               About
@@ -71,7 +61,6 @@ export default function NavBar({
               className={nav_menu}
               onClick={() => {
                 scrollToSection(refs.reviewsRef);
-                setPin((prev) => prev + 3);
               }}
             >
               Services
@@ -84,7 +73,6 @@ export default function NavBar({
               href={`/signin`}
               onClick={() => {
                 scrollToSection(refs.reviewsRef);
-                setPin((prev) => prev + 3);
               }}
             >
               <p className="border border-(--primary) text-(--primary) rounded-[10px] px-7 py-1 hover:bg-(--primary) hover:text-(--background) transform duration-200 ease-in-out cursor-pointer">
