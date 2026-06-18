@@ -87,11 +87,10 @@ class AuthController extends Controller
 
         // If credentials don't match, attempt() returns false
         if (!$token) {
-            // We throw a ValidationException to return a 422 with a field-level error
-            // This is intentionally vague — never say "wrong password" vs "wrong username"
-            throw ValidationException::withMessages([
-                'username' => ['Invalid credentials.'],
-            ]);
+            return response()->json([
+                'success' => false,
+                'message' => 'Invalid credentials.',
+             ], 401);
         }
 
         return response()->json([

@@ -37,41 +37,42 @@ export const register = async (formData: AuthProps) => {
 };
 
 export const login = async (formData: AuthProps) => {
-  const username = formData.username;
-  const password = formData.password;
-  return fetch(`${BASE}/login`, options("POST", { username, password }))
-    .then((r) => r.json())
-    .then((data) => {
-      if (data.success) {
-        if (data.success) {
-          Swal.fire({
-            icon: "success",
-            title: "Login Successful",
-            text: data.message,
-          });
-        }
-      }
-      if (data.errors) {
-        Swal.fire({
-          icon: "error",
-          title: "Login Failed",
-          text: Array.isArray(data.errors)
-            ? data.errors.join(", ")
-            : data.errors,
-        });
-      }
-      return data;
-    })
-    .catch((err) => {
+  const { username, password } = formData;
+
+  try {
+    const response = await fetch(
+      `${BASE}/login`,
+      options("POST", { username, password }),
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
       Swal.fire({
         icon: "error",
-        title: "Network Error",
-        text: "Something went wrong. Please try again.",
+        title: "Login Failed",
+        text: data.message || "Invalid credentials",
       });
 
-      console.error("Network Error:", err);
-      throw err;
+      return data;
+    }
+
+    Swal.fire({
+      icon: "success",
+      title: "Login Successful",
+      text: data.message,
     });
+
+    return data;
+  } catch (err) {
+    Swal.fire({
+      icon: "error",
+      title: "Network Error",
+      text: "Something went wrong. Please try again.",
+    });
+
+    throw err;
+  }
 };
 
 // No token to clear manually — the server sends an expired cookie

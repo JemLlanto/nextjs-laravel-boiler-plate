@@ -10,10 +10,11 @@ import { web_data, reviews } from "@/utils/data.helper";
 import LoginModal from "@/components/LogInModal";
 import RegisterModal from "@/components/RegisterModal";
 import { scrollToSection } from "@/utils/page.helper";
-import { getMe } from "@/services/auth";
+import { checkUser } from "@/utils/auth.helper";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
-  const [isAuthorize, setIsAuthorized] = useState<boolean>(false);
+  const router = useRouter();
   const homeRef = useRef<HTMLElement | null>(null);
   const hoursRef = useRef<HTMLElement | null>(null);
   const locationRef = useRef<HTMLElement | null>(null);
@@ -38,20 +39,16 @@ export default function Home() {
     setPin("");
   };
 
-  const checkUser = async () => {
-    const data = await getMe();
-    if (data.success) {
-      setIsAuthorized(true);
-      console.log("Authorized");
-
-      console.log(data);
-    } else {
-      console.log("Not authorized");
-    }
-  };
-
   useEffect(() => {
-    checkUser();
+    const validateUser = async () => {
+      if (await checkUser()) {
+        router.push(`/home`);
+      } else {
+        router.push(`/`);
+      }
+    };
+
+    validateUser();
   }, []);
 
   return (
@@ -66,7 +63,7 @@ export default function Home() {
           />
         </header>
 
-        <LoginModal
+        {/* <LoginModal
           open={showLogin}
           handleClose={() => setShowLogin(false)}
           checkUser={checkUser}
@@ -74,7 +71,7 @@ export default function Home() {
         <RegisterModal
           open={showRegister}
           handleClose={() => setShowRegister(false)}
-        />
+        /> */}
         <main>
           <section>
             <Hero web_data={web_data} />

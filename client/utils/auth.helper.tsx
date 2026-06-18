@@ -1,5 +1,5 @@
-import { AuthProps } from "@/services/auth";
-
+import { AuthProps, getMe } from "@/services/auth";
+import { useRouter } from "next/navigation";
 export interface FormErrors {
   username?: string;
   password?: string;
@@ -25,4 +25,16 @@ export const validate = (
   }
   setErrors(newErrors);
   return Object.keys(newErrors).length === 0;
+};
+
+export const checkUser = async () => {
+  const data = await getMe();
+  if (data.success) {
+    console.log("Authorized");
+    console.log(data);
+    return true;
+  } else {
+    console.log("Not authorized");
+    return false;
+  }
 };
