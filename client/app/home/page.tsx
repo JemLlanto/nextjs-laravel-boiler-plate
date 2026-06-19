@@ -1,32 +1,9 @@
 "use client";
 import HomeLayout from "@/components/homeLayout/HomeLayout";
 import { checkUser } from "@/utils/auth.helper";
+import { DAY_LABELS, MONTHS, SelectedDate, today } from "@/utils/date.helper";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-
-const MONTHS = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-];
-const DAY_LABELS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-
-const today = new Date();
-
-interface SelectedDate {
-  d: number;
-  m: number;
-  y: number;
-}
 
 const HomePage = () => {
   const router = useRouter();
