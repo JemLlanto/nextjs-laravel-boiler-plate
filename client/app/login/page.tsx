@@ -23,14 +23,6 @@ const LoginPage = () => {
     validateUser();
   }, []);
 
-  if (isLoading) {
-    return (
-      <>
-        <PageLoader />
-      </>
-    );
-  }
-
   return (
     <div className="h-dvh w-dvw bg-(--primary) flex justify-center items-center p-4">
       <div className="bg-(--background) w-full max-w-md rounded-2xl shadow-xl p-8">

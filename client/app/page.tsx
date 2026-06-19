@@ -29,14 +29,6 @@ export default function Home() {
     validateUser();
   }, []);
 
-  if (isLoading) {
-    return (
-      <>
-        <PageLoader />
-      </>
-    );
-  }
-
   return (
     <>
       <div className="relative h-dvh snap-y overflow-y-auto">
